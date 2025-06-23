@@ -1,13 +1,29 @@
 const { UserSchema } = require("./User.schema");
 
-const insertUser = (userObj) => {
-  return new Promise((resolve, reject) => {
-    UserSchema(userObj)
-      .save()
-      .then((data) => resolve(data))
-      .catch((error) => reject(error));
-  });
+// Insert a new user
+const insertUser = async (userObj) => {
+  try {
+    const user = new UserSchema(userObj);
+    const result = await user.save();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
-module.exports={
-    insertUser,
+
+// Get user by email
+const getUserByEmail = async (email) => {
+  if (!email) return null;
+
+  try {
+    const user = await UserSchema.findOne({ email });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  insertUser,
+  getUserByEmail,
 };

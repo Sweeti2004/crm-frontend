@@ -1,0 +1,21 @@
+### User Sign up endpoints
+
+# POST http://localhost:3001/v1/user
+
+# Content-Type: application/json
+# {
+#   "name": "Anjali Sharma",
+#   "company": "TechNova Solutions",
+#   "address": "4th Floor, Tower B, Cyber City, Gurugram, Haryana, India",
+#   "phone": "9876543210",
+#   "email": "anjali.sharma@1234.com",
+#   "password": "Anjali@123"
+# }
+POST http://localhost:3001/v1/user/login
+
+Content-Type: application/json
+{
+
+  "email": "anjali.sharma@1234.com",
+  "password": "Anjali@123"
+}
