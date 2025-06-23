@@ -2,6 +2,7 @@ const express=require("express")
 const router=express.Router()
 const {insertUser,getUserByEmail}=require("../model/user/User.model")
 const {hashPassword,comparePassword}=require("../helpers/bcrypt.helper")
+const{crateAccessJWT,crateRefreshJWT}=require("../helpers/jwt.helper")
 router.all('/',(req,res,next)=>{
     
    // res.json({message: "Return from user router"})
@@ -46,8 +47,15 @@ const user=await getUserByEmail(email)
     console.log(user)
     const passFromDb=user && user._id?user.password:null
    if(!passFromDb) return res.json({status:"error",message:"Invalid email or password!"})
+
+
     const result= await comparePassword(password,passFromDb)
-    console.log(result)
-    res.json({status:"success",message:"Login Successfully!"})
+    if(!result){
+        return res.json({status:"error",message:"Invalid email or password!"})
+    }
+    const accessJWT=await crateAccessJWT(user.email)
+    const refreshJWT=await crateRefreshJWT(user.email)
+
+    res.json({status:"success",message:"Login Successfully!",accessJWT,refreshJWT})
 })
 module.exports=router;
