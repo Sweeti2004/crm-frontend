@@ -53,7 +53,7 @@ const user=await getUserByEmail(email)
     if(!result){
         return res.json({status:"error",message:"Invalid email or password!"})
     }
-    const accessJWT=await crateAccessJWT(user.email)
+    const accessJWT=await crateAccessJWT(user.email,`${user._id}`)
     const refreshJWT=await crateRefreshJWT(user.email)
 
     res.json({status:"success",message:"Login Successfully!",accessJWT,refreshJWT})
