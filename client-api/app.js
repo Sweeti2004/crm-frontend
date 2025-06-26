@@ -45,16 +45,18 @@ app.use(bodyParser.json());
 //Load Router
 const userRouter = require("./src/routers/user.router")
 const ticketRouter = require("./src/routers/ticket.router")
+const tokensRouter=require("./src/routers/tokens.router")
 // use Router
 app.use("/v1/user", userRouter)
 app.use("/v1/ticket", ticketRouter)
+app.use("/v1/tokens", tokensRouter)
 //Error handler
 const handleError = require('./src/utils/errorHandler')
 // Global Error Handler
 app.use((req, res, next) => {
   const error = new Error("Resources not found")
   error.status = 404
-  next(error, res)
+  next(error)
 });
 app.use((error, req, res, next) => {
   handleError(error, res)
