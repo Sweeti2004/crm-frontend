@@ -4,6 +4,7 @@ const { insertUser, getUserByEmail,getUserById} = require("../model/user/User.mo
 const { hashPassword, comparePassword } = require("../helpers/bcrypt.helper")
 const { crateAccessJWT, crateRefreshJWT } = require("../helpers/jwt.helper")
 const {userAuthorization}=require("../middlewares/authorization.middleware")
+const {setPasswordRestPin}=require("../model/resetPin/ResetPin.model")
 router.all('/', (req, res, next) => {
 
     // res.json({message: "Return from user router"})
@@ -65,5 +66,17 @@ router.get("/", userAuthorization, async(req, res) => {
     const _id=req.userId
     const userProof=await getUserById(_id)
     res.json({ user:userProof })
+})
+
+
+router.post("/reset-password",async(req,res)=>{
+    const {email}=req.body;
+    const user=await getUserByEmail(email)
+    if(user&& user._id){
+        //Create unique 6 digit pin
+        const setPin=await setPasswordRestPin(email)
+        return res.json(setPin)
+    }
+    res.json({status:"error",message:" if the email is exist in our database ,the password reset pin will be sent sortly"});
 })
 module.exports = router;
