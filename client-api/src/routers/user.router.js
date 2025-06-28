@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { insertUser, getUserByEmail, getUserById,updatePassword } = require("../model/user/User.model");
+const { insertUser, getUserByEmail, getUserById, updatePassword } = require("../model/user/User.model");
 const { hashPassword, comparePassword } = require("../helpers/bcrypt.helper");
 const { crateAccessJWT, crateRefreshJWT } = require("../helpers/jwt.helper");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
-const { setPasswordRestPin,getPinByEmailPin,deletePin} = require("../model/resetPin/ResetPin.model");
+const { setPasswordRestPin, getPinByEmailPin, deletePin } = require("../model/resetPin/ResetPin.model");
 const { emailProcessor } = require("../helpers/email.helper");
-
+const { resetPassReqValidation,updatePassValidation } = require("../middlewares/formValidation.middleware")
 router.all('/', (req, res, next) => {
     next();
 });
@@ -74,61 +74,61 @@ router.get("/", userAuthorization, async (req, res) => {
 });
 
 // Reset password router
-router.post("/reset-password",  async (req, res) => {
-	const { email } = req.body;
+router.post("/reset-password", resetPassReqValidation, async (req, res) => {
+    const { email } = req.body;
 
-	const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email);
 
-		/// crate// 2. create unique 6 digit pin
-		const setPin = await setPasswordRestPin(email);
-		await emailProcessor({
-			email,
-			pin : setPin.pin,
-			type:"request-new-password"
+    /// crate// 2. create unique 6 digit pin
+    const setPin = await setPasswordRestPin(email);
+    await emailProcessor({
+        email,
+        pin: setPin.pin,
+        type: "request-new-password"
+    });
+
+
+
 });
-	
 
-	
-});
-
-router.patch("/reset-password",  async (req, res) =>{
+router.patch("/reset-password",updatePassValidation, async (req, res) => {
     const { email, pin, newPassword } = req.body;
-    const getPin=await getPinByEmailPin(email,pin)
+    const getPin = await getPinByEmailPin(email, pin)
     // 2. validate pin
-	if (getPin?._id) {
-		const dbDate = getPin.addedAt;
-		const expiresIn = 1;
+    if (getPin?._id) {
+        const dbDate = getPin.addedAt;
+        const expiresIn = 1;
 
-		let expDate = dbDate.setDate(dbDate.getDate() + expiresIn);
+        let expDate = dbDate.setDate(dbDate.getDate() + expiresIn);
 
-		const today = new Date();
+        const today = new Date();
 
-		if (today > expDate) {
-			return res.json({ status: "error", message: "Invalid or expired pin." });
-		}
+        if (today > expDate) {
+            return res.json({ status: "error", message: "Invalid or expired pin." });
+        }
         // encrypt new password
-		const hashedPass = await hashPassword(newPassword);
+        const hashedPass = await hashPassword(newPassword);
 
-		const user = await updatePassword(email, hashedPass);
-        if(user._id){
-            	await emailProcessor({
-  email,
-  type: "update-password-success" 
-});
+        const user = await updatePassword(email, hashedPass);
+        if (user._id) {
+            await emailProcessor({
+                email,
+                type: "update-password-success"
+            });
 
-		
-        //delete the pin from db
-        
-        deletePin(email,pin)
+
+            //delete the pin from db
+
+            deletePin(email, pin)
             return res.json({
-                status:"success",
-                message:"Your password has been updated"
+                status: "success",
+                message: "Your password has been updated"
             })
         }
         res.json({
-                status:"error",
-                message:"Unable to update your password ,please try again later"
-            })
+            status: "error",
+            message: "Unable to update your password ,please try again later"
+        })
     }
     res.json(getPin)
 })
