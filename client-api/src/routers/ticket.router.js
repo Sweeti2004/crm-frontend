@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router()
-const {insertTicket,getTickets}=require("../model/ticket/Ticket.Model")
+const {insertTicket,getTickets,getTicketById,updateClientReply,updateStatusClose}=require("../model/ticket/Ticket.Model")
 const{ userAuthorization}=require("../middlewares/authorization.middleware")
 router.all('/',(req,res,next)=>{
     //res.json({message: "Return from ticket router"})
@@ -52,6 +52,74 @@ router.get("/", userAuthorization, async (req, res) => {
     return res.json({
       status: "success",
       result,
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// Get all tickets for a specific user by user id
+router.get("/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    const clientId = req.userId;
+    const result = await getTicketById(_id, clientId);
+
+    return res.json({
+      status: "success",
+      result,
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// update reply message form client
+router.put(
+  "/:_id",
+  userAuthorization,
+  async (req, res) => {
+    try {
+      const { message, sender } = req.body;
+      const { _id } = req.params;
+      
+
+      const result = await updateClientReply({ _id, message, sender });
+
+      if (result._id) {
+        return res.json({
+          status: "success",
+          message: "your message updated",
+        });
+      }
+      res.json({
+        status: "error",
+        message: "Unable to update your message please try again later",
+      });
+    } catch (error) {
+      res.json({ status: "error", message: error.message });
+    }
+  }
+);
+
+// update ticket status to close
+router.patch("/close-ticket/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const clientId = req.userId;
+
+    const result = await updateStatusClose({ _id, clientId });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "The ticket has been closed",
+      });
+    }
+    res.json({
+      status: "error",
+      message: "Unable to update the ticket",
     });
   } catch (error) {
     res.json({ status: "error", message: error.message });
