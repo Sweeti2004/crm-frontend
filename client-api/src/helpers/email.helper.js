@@ -4,8 +4,8 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-        user: 'keith.schimmel@ethereal.email',
-        pass: 'qB8VwGV1xfMhgkqtRG'
+        user: 'leopoldo40@ethereal.email',
+        pass: 'Aja39ctqueMYqekFx1'
     }
 });
 
@@ -16,54 +16,49 @@ const send = (info) => {
       let result = await transporter.sendMail(info);
 
       console.log("Message sent: %s", result.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-      // Preview only available when sending through an Ethereal account
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(result));
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
       resolve(result);
     } catch (error) {
       console.log(error);
+      reject(error);
     }
   });
 };
 
-const emailProcessor = ({ email, pin}) => {
-  //let info = "";
-  //switch (type) {
-   // case "request-new-password":
-      const info = {
-        from: '"CMR Company" <keith.schimmel@ethereal.email>', // sender address
-        to: email, // list of receivers
-        subject: "Password reset Pin", // Subject line
-        text:
-          "Here is your password rest pin" +
-          pin +
-          " This pin will expires in 1day", // plain text body
+const emailProcessor = async ({ email, pin, type }) => {
+  let info = "";
+
+  switch (type) {
+    // case "request-new-password":
+    case "request-new-password":
+      info = {
+        from: '"CMR Company" <leopoldo40@ethereal.email>',
+        to: email,
+        subject: "Password reset Pin",
+        text: "Here is your password rest pin " + pin + " This pin will expires in 1 day",
         html: `<b>Hello </b>
-      Here is your pin 
-      <b>${pin} </b>
-      This pin will expires in 1day
-      <p></p>`, // html body
+        <p>Here is your pin:</p>
+        <b>${pin}</b>
+        <p>This pin will expire in 1 day.</p>`,
       };
 
-      send(info);
-     // break;
+      await send(info);
+      break;
 
     // case "update-password-success":
-    //   info = {
-    //     from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
-    //     to: email, // list of receivers
-    //     subject: "Password updated", // Subject line
-    //     text: "Your new password has been update", // plain text body
-    //     html: `<b>Hello </b>
-       
-    //   <p>Your new password has been update</p>`, // html body
-    //   };
+    case "update-password-success":
+      info = {
+        from: '"CMR Company" <leopoldo40@ethereal.email>',
+        to: email,
+        subject: "Password updated",
+        text: "Your new password has been update",
+        html: `<b>Hello </b>
+        <p>Your new password has been update</p>`,
+      };
 
-    //   send(info);
-    //   break;
+      await send(info);
+      break;
 
     // case "new-user-confirmation-required":
     //   info = {
@@ -81,9 +76,9 @@ const emailProcessor = ({ email, pin}) => {
     //   send(info);
     //   break;
 
-    // default:
-    //   break;
-  //}
+    default:
+      break;
+  }
 };
 
 module.exports = { emailProcessor };
