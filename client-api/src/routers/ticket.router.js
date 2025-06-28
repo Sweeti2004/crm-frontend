@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router()
-const {insertTicket,getTickets,getTicketById,updateClientReply,updateStatusClose}=require("../model/ticket/Ticket.Model")
+const {insertTicket,getTickets,getTicketById,updateClientReply,updateStatusClose,deleteTicket}=require("../model/ticket/Ticket.Model")
 const{ userAuthorization}=require("../middlewares/authorization.middleware")
 router.all('/',(req,res,next)=>{
     //res.json({message: "Return from ticket router"})
@@ -120,6 +120,23 @@ router.patch("/close-ticket/:_id", userAuthorization, async (req, res) => {
     res.json({
       status: "error",
       message: "Unable to update the ticket",
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// Delete a ticket
+router.delete("/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const clientId = req.userId;
+
+    const result = await deleteTicket({ _id, clientId });
+
+    return res.json({
+      status: "success",
+      message: "The ticket has been deleted",
     });
   } catch (error) {
     res.json({ status: "error", message: error.message });
