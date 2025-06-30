@@ -1,8 +1,13 @@
 import React from 'react'
 import { Form, Row, Col } from "react-bootstrap";
-
-const SearchForm = ({handleOnChange,str}) => {
-   
+import { useDispatch } from 'react-redux';
+import {filterSerachTicket} from '../../page/ticket-list/ticketsAction'
+const SearchForm = () => {
+  const dispatch=useDispatch()
+   const handleOnChange=e=>{
+    const {value}=e.target
+    dispatch(filterSerachTicket(value))
+   }
   return (
      <div>
       <Form>
@@ -14,7 +19,7 @@ const SearchForm = ({handleOnChange,str}) => {
             <Form.Control
               name="searchStr"
               onChange={handleOnChange}
-              value={str}
+              
               placeholder="Search ..."
             />
           </Col>

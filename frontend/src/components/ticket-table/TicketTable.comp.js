@@ -1,9 +1,12 @@
 import React from 'react'
 import { Table } from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
-const TicketTable = ({tickets}) => {
-  
+const TicketTable = () => {
+ const { searchTicketList, isLoading, error } = useSelector((state) => state.tickets);
+if(isLoading) return <h1>Loading...</h1>
+if(error) return <h3>{error}</h3>
   return (
     <Table striped bordered hover>
       <thead>
@@ -15,34 +18,29 @@ const TicketTable = ({tickets}) => {
         </tr>
       </thead>
       <tbody>
-        {tickets.length ?
-        tickets.map((row)=>(
-            <tr key={row.id}>
-          <td>{row.id}</td>
-          <td>
-          <Link to ={`/ticket/${row.id}`}>
-          {row.subject}
-            </Link>
-          </td>
-          <td>{row.status}</td>
-          <td>{row.addedAt}</td>
-        </tr>
-        )):
-        (
+        {Array.isArray(searchTicketList) && searchTicketList.length > 0 ? (
+          searchTicketList.map((row) => (
+            <tr key={row._id}>
+              <td>{row._id}</td>
+              <td>
+                <Link to={`/ticket/${row._id}`}>
+                  {row.subject}
+                </Link>
+              </td>
+              <td>{row.status}</td>
+              <td>{row.openAt}</td>
+            </tr>
+          ))
+        ) : (
           <tr>
             <td colSpan="4" className="text-center">
-              No ticket show{" "}
+              No ticket to show
             </td>
           </tr>
-        )
-        }
-        
-        
-        
+        )}
       </tbody>
-     
     </Table>
   )
 }
 
-export default TicketTable
+export default TicketTable;
