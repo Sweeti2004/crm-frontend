@@ -4,6 +4,7 @@ import {loginPending, loginSuccess, loginFail} from "./loginSlice"
 import { useDispatch,useSelector } from 'react-redux';
 import {userLogin} from "../../api/userApi"
 import { useNavigate } from 'react-router-dom';
+import { getUserProfile } from '../../page/dashboard/userAction';
 const Login = ({formSwitcher}) => {
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
@@ -40,7 +41,7 @@ const Login = ({formSwitcher}) => {
 			
 
 			dispatch(loginSuccess());
-			//dispatch(getUserProfile());
+			dispatch(getUserProfile());
 		 navigate("/dashboard");
       console.log(isAuth)
 		} catch (error) {

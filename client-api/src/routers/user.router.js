@@ -71,7 +71,12 @@ router.post("/login", async (req, res) => {
 router.get("/", userAuthorization, async (req, res) => {
     const _id = req.userId;
     const userProof = await getUserById(_id);
-    return res.json({ user: userProof });
+    const { name,email}=userProof;
+    return res.json({ user: 
+        {
+            _id,name,email,
+        } ,
+    });
 });
 
 // Reset password router

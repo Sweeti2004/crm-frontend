@@ -9,6 +9,7 @@ const Header = () => {
   const logMeOut = () => {
     // Clear session/local storage or auth token here
     localStorage.clear();
+    sessionStorage.removeItem('accessJWT')
 
     // Redirect to login or home page
     navigate('/');
