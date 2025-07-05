@@ -3,15 +3,17 @@ import { Navbar, Nav } from 'react-bootstrap';
 import logo from "../../assets/img/logo.png";
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom'
+import { userLogout } from '../../api/userApi';
 const Header = () => {
     const navigate = useNavigate();
 
   const logMeOut = () => {
     // Clear session/local storage or auth token here
-    localStorage.clear();
+    //localStorage.clear();
     sessionStorage.removeItem('accessJWT')
-
+//localStorage.removeItem("crmSite")
     // Redirect to login or home page
+    userLogout()
     navigate('/');
   };
 

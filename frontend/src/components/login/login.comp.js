@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { Row,Col ,Container,Form , Button,Spinner,Alert} from 'react-bootstrap'
 import {loginPending, loginSuccess, loginFail} from "./loginSlice"
 import { useDispatch,useSelector } from 'react-redux';
@@ -11,6 +11,10 @@ const Login = ({formSwitcher}) => {
   const dispatch=useDispatch()
  const navigate = useNavigate(); 
   const {isLoading,isAuth,error}=useSelector(state=>state.login)
+
+  useEffect(()=>{
+   (sessionStorage.getItem('accessJWT')) &&  navigate("/dashboard")
+  },[navigate,isAuth])
   const handleOnchange = e =>{
     const {name,value}=e.target
     switch(name){

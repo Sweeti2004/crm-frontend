@@ -19,7 +19,7 @@ const crateAccessJWT = async (email, _id) => {
 
 const crateRefreshJWT = async (email,_id) => {
   try {
-    const refreshJWT=jwt.sign({email},process.env.JWT_ACCESS_SECRET,{
+    const refreshJWT=jwt.sign({email},process.env.JWT_REFRESH_SECRET,{
     expiresIn:"30d",
  })
  await storeUserRefreshJWT(_id,refreshJWT)
