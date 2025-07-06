@@ -1,17 +1,32 @@
 import axios from 'axios';
 
+const rootUrl = 'http://localhost:5000/v1';
+const ticketUrl = `${rootUrl}/ticket`;
+
 export const getAllTickets = async () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const result = await axios.get('http://localhost:5000/v1/ticket', {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuamFsaS5zaGFybWFAMTIzNC5jb20iLCJpYXQiOjE3NTEyNjM0MTgsImV4cCI6MTc1MTM0OTgxOH0.6VS875fUvnVjul_XDZzzEa9A7bMSzuk1mBsBNOvPUJI',
-        },
-      });
-      resolve(result); // ✅ fix: resolve the result
-    } catch (error) {
-      reject(error); // ✅ fix: reject the error
-    }
-  });
+  try {
+    const result = await axios.get(ticketUrl, {
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("accessJWT"),
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error("getAllTickets Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getSingleTicket = async (_id) => {
+  try {
+    const result = await axios.get(`${ticketUrl}/${_id}`, {
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("accessJWT"),
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error("getSingleTicket Error:", error.response?.data || error.message);
+    throw error;
+  }
 };
