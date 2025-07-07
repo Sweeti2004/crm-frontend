@@ -44,6 +44,29 @@ const ticketListSlice= createSlice({
     fetchSingleTicketFail: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+    }, replyTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    replyTicketSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = "";
+      state.replyMsg = payload;
+    },
+    replyTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.replyTicketError = payload;
+    },
+     closeTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    closeTicketSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = "";
+      state.replyMsg = payload;
+    },
+    closeTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
 }
 })
@@ -51,5 +74,5 @@ const ticketListSlice= createSlice({
 const {reducer,actions}=ticketListSlice;
 export const {fetchTicketLoading,fetchTicketSuccess,fetchTicketFail,searchTickets, fetchSingleTicketLoading,
   fetchSingleTicketSuccess,
-  fetchSingleTicketFail,}=actions
+  fetchSingleTicketFail,replyTicketLoading,replyTicketSuccess,replyTicketFail,closeTicketLoading,closeTicketSuccess,closeTicketFail,}=actions
 export default reducer

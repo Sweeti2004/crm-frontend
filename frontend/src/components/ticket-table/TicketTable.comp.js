@@ -28,7 +28,7 @@ if(error) return <h3>{error}</h3>
                 </Link>
               </td>
               <td>{row.status}</td>
-              <td>{row.openAt}</td>
+              <td>{row.openAt&& new Date(row.openAt).toLocaleString()}</td>
             </tr>
           ))
         ) : (

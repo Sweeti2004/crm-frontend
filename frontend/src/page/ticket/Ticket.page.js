@@ -5,12 +5,12 @@ import MessageHistory from '../../components/message-history/MessageHistory.comp
 import UpdateTicket from '../../components/update-ticket/UpdateTicket.comp';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSingleTicket } from '../ticket-list/ticketsAction';
+import { fetchSingleTicket,closeTicket } from '../ticket-list/ticketsAction';
 
 const Ticket = () => {
   const { tid } = useParams();
   const dispatch = useDispatch();
-  const [message, setMessage] = useState('');
+  const {replyMsg}=useSelector(state=>state.tickets)
 
   const {
     isLoading,
@@ -25,13 +25,7 @@ const Ticket = () => {
     dispatch(fetchSingleTicket(tid));
   }, [tid, dispatch]);
 
-  const handleOnChange = e => {
-    setMessage(e.target.value);
-  };
-
-  const handleOnSubmit = () => {
-    alert("Form Submitted!");
-  };
+ 
 
   return (
     <Container>
@@ -45,6 +39,7 @@ const Ticket = () => {
         <Col>
           {isLoading && <Spinner variant="primary" animation="border" />}
           {error && <Alert variant="danger">{error}</Alert>}
+          {replyMsg && <Alert variant='success'>{replyMsg}</Alert>}
         </Col>
       </Row>
 
@@ -52,15 +47,15 @@ const Ticket = () => {
         <Col className="text-weight-bolder text-secondary">
           <div className="subject">Subject: {ticket?.subject}</div>
           <div className="date">
-            Ticket Opened: {ticket?.openAt}
+            Ticket Opened:{ticket.openAt && new Date(ticket.openAt).toLocaleString()}
           </div>
           <div className="status">Status: {ticket?.status}</div>
         </Col>
         <Col className="text-right">
           <Button
             variant="outline-info"
-            // onClick={() => dispatch(closeTicket(tid))}
-            // disabled={ticket?.status === "Closed"}
+            onClick={() => dispatch(closeTicket(tid))}
+            disabled={ticket?.status === "Closed"}
           >
             Close Ticket
           </Button>
@@ -79,11 +74,7 @@ const Ticket = () => {
 
       <Row className="mt-4">
         <Col>
-          <UpdateTicket
-            msg={message}
-            handleOnChange={handleOnChange}
-            handleOnSubmit={handleOnSubmit}
-          />
+          <UpdateTicket _id={tid}/>
         </Col>
       </Row>
     </Container>

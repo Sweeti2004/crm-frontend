@@ -1,7 +1,26 @@
-import React from 'react'
-import { Form, Button } from "react-bootstrap";
+import React ,{useState} from 'react'
+import { Form, Button,Alert } from "react-bootstrap";
+import { useSelector } from 'react-redux';
+import { replyOnTicket } from '../../page/ticket-list/ticketsAction';
+import { useDispatch } from 'react-redux';
 
-const UpdateTicket = ({message,handleOnChange,handleOnSubmit}) => {
+const UpdateTicket = ({_id}) => {
+  const dispatch=useDispatch()
+  const {user:{name}}=useSelector(state=>state.user)
+  const [message,setMessage]=useState('')
+   const handleOnChange = e => {
+    setMessage(e.target.value);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault()
+   const msgObj={
+      message,
+      sender:name
+    };
+    dispatch(replyOnTicket(_id,msgObj))
+    setMessage("")
+  };
    return (
     <div>
       <Form onSubmit={handleOnSubmit}> 
