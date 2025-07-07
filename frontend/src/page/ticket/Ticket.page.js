@@ -10,12 +10,11 @@ import { fetchSingleTicket,closeTicket } from '../ticket-list/ticketsAction';
 const Ticket = () => {
   const { tid } = useParams();
   const dispatch = useDispatch();
-  const {replyMsg}=useSelector(state=>state.tickets)
 
   const {
     isLoading,
     error,
-    selectedTicket,
+    selectedTicket,replyTicketError,replyMsg
   } = useSelector(state => state.tickets);
 
   // ✅ Safely get ticket data from array
@@ -39,6 +38,7 @@ const Ticket = () => {
         <Col>
           {isLoading && <Spinner variant="primary" animation="border" />}
           {error && <Alert variant="danger">{error}</Alert>}
+          {replyTicketError && <Alert variant="danger">{replyTicketError}</Alert>}
           {replyMsg && <Alert variant='success'>{replyMsg}</Alert>}
         </Col>
       </Row>

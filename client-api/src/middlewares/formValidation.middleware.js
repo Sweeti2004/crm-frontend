@@ -34,7 +34,7 @@ const createNewTicketValidation = (req, res, next) => {
 		subject: shortStr.required(),
 		sender: shortStr.required(),
 		message: longStr.required(),
-		//issueDate: dt.required(),
+		issueDate: dt.required(),
 	});
 
 	console.log(req.body);

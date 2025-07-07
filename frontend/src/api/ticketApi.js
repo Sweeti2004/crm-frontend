@@ -69,3 +69,20 @@ export const updateTicketStatusClosed = (_id) => {
   });
 };
 
+export const createNewTicket = (frmData) => {
+  console.log("from api", frmData);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await axios.post(ticketUrl, frmData, {
+        headers: {
+          Authorization: "Bearer "+ sessionStorage.getItem("accessJWT"),
+        },
+      });
+
+      resolve(result.data);
+    } catch (error) {
+      console.log(error.message);
+      reject(error);
+    }
+  });
+};

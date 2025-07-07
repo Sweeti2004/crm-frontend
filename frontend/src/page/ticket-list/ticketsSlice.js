@@ -4,7 +4,7 @@ const initialState = {
   tickets: [],
   isLoading: false,
   error: "",
-//   replyTicketError: "",
+  replyTicketError: "",
   searchTicketList: [],
    selectedTicket: {},
 //   replyMsg: "",
