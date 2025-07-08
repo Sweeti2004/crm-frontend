@@ -93,7 +93,10 @@ router.post("/reset-password", resetPassReqValidation, async (req, res) => {
         type: "request-new-password"
     });
 
-
+return res.json({
+    status: "success",
+    message: "If the email is in our system, you will receive a password reset pin shortly."
+  });
 
 });
 

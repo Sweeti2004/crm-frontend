@@ -77,7 +77,7 @@ const Login = ({formSwitcher}) => {
         </Col>
       </Row>
       <div className="text-center mt-3">
-  <a href="#!" onClick={()=> formSwitcher('reset')} className="btn btn-outline-info btn-sm rounded-pill px-4 shadow-sm">
+  <a href="/password-reset"  className="btn btn-outline-info btn-sm rounded-pill px-4 shadow-sm">
  Forgot Password?
   </a>
 </div>

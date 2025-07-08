@@ -7,7 +7,7 @@ import AddTicket from './page/new-ticket/AddTicket.page';
 import TicketLists from './page/ticket-list/TicketLists.page';
 import Ticket from './page/ticket/Ticket.page';
 import PrivateRoute from './components/private-route/PrivateRoute.comp';
-
+import { PasswordOtpForm } from './page/password-reset/PasswordOtpForm.page';
 function App() {
   return (
     <div className="App">
@@ -15,6 +15,7 @@ function App() {
         <Routes>
           {/* Public Route */}
           <Route path="/" element={<Entry />} />
+           <Route path="/password-reset" element={<PasswordOtpForm />} />
 
           {/* Protected Routes inside layout */}
           <Route path="/" element={<DefaultLayout />}>
