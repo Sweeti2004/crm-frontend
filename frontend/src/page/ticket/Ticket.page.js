@@ -6,6 +6,7 @@ import UpdateTicket from '../../components/update-ticket/UpdateTicket.comp';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleTicket,closeTicket } from '../ticket-list/ticketsAction';
+import { resetResponseMsg } from '../ticket-list/ticketsSlice';
 
 const Ticket = () => {
   const { tid } = useParams();
@@ -22,7 +23,10 @@ const Ticket = () => {
 
   useEffect(() => {
     dispatch(fetchSingleTicket(tid));
-  }, [tid, dispatch]);
+    return ()=>{
+     (replyMsg ||replyTicketError) && dispatch(resetResponseMsg())
+    }
+  }, [tid, dispatch,replyMsg,replyTicketError]);
 
  
 
