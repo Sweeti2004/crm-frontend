@@ -90,7 +90,6 @@ BACKEND-
 ---
 ### 🔧 Setup
 
-```bash
 # Backend
 cd client-api
 npm install
@@ -114,6 +113,7 @@ npm install
 npm start
 
 ---
+```bash
 ### Future Enhancements
 🔔 Real-time Notifications using Socket.IO for instant ticket updates, replies, and escalations.
 
