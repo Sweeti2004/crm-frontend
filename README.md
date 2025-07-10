@@ -70,10 +70,12 @@ Redis is used to store session tokens (JWTs) for better performance and scalabil
 
 ## 📂 Folder Structure
 FRONTEND-
+
 ![image](https://github.com/user-attachments/assets/0309fdc6-05db-4ec4-9339-45f7ecbbe49d)
 
 
-BACKEND
+BACKEND-
+
 ![image](https://github.com/user-attachments/assets/dc1d5702-f1aa-4c5d-a20b-255e96ad623c)
 
 
@@ -85,6 +87,7 @@ BACKEND
 - Redis
 - npm
 
+---
 ### 🔧 Setup
 
 ```bash
@@ -113,6 +116,7 @@ npm start
 📁 File Attachment Support so users can upload screenshots or logs with their issue.
 
 
+---
 👩‍💻 Developer
 Sweeti Kumari
 📧 sweeti754940@gmail.com
