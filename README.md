@@ -91,26 +91,17 @@ BACKEND-
 ### 🔧 Setup
 
 # Backend
+```bash
 cd client-api
 npm install
 node app.js
 
 # Frontend
+```bash
 cd frontend
 npm install
 npm start
 ### 🔧 Setup
-
-
-## Backend
-cd client-api
-npm install
-node app.js
-
-## Frontend
-cd frontend
-npm install
-npm start
 
 ---
 
@@ -130,6 +121,7 @@ npm start
 
 ---
 ### Developer
+```bash
 Sweeti Kumari
 📧 sweeti754940@gmail.com
 🔗 https://www.linkedin.com/in/sweeti-kumari-254850259/
