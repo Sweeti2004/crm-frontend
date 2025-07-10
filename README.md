@@ -103,18 +103,18 @@ npm start
 ### 🔧 Setup
 
 ```bash
-# Backend
+## Backend
 cd client-api
 npm install
 node app.js
 
-# Frontend
+## Frontend
 cd frontend
 npm install
 npm start
 
 ---
-✨ Future Enhancements
+### Future Enhancements
 🔔 Real-time Notifications using Socket.IO for instant ticket updates, replies, and escalations.
 
 📊 Analytics Dashboard to show charts and metrics like ticket resolution time, ticket count by category, and user activity.
@@ -129,7 +129,7 @@ npm start
 
 
 ---
-👩‍💻 Developer
+### Developer
 Sweeti Kumari
 📧 sweeti754940@gmail.com
 🔗 https://www.linkedin.com/in/sweeti-kumari-254850259/
