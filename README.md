@@ -15,9 +15,6 @@ A full-stack web application that enables users to **report, track, and manage i
 
 ---
 
-
----
-
 ## 💻 Tech Stack
 
 ### Frontend:
@@ -54,42 +51,30 @@ Redis is used to store session tokens (JWTs) for better performance and scalabil
 
 ## 📸 Screenshots
 ![Login](https://github.com/user-attachments/assets/b4b6c623-56f3-4158-a908-c5b1247c838d)
+
 ![Dashboard](https://github.com/user-attachments/assets/712b99fc-d7e8-449d-b46d-7eee9db136c3)
+
 ![Ticket listing](https://github.com/user-attachments/assets/8f4b47ca-332c-4777-b9e5-bea03034d55b)
+
 ![Add New Tickt](https://github.com/user-attachments/assets/23ad0924-51c5-4115-9ee3-2724cd4e04de)
+
 ![Reply Ticket](https://github.com/user-attachments/assets/c8e5527a-65a7-4de7-9693-fdd170493ce5)
+
 ![Forgot Password](https://github.com/user-attachments/assets/44da07db-ba70-4201-b16b-4c0cc4f5c948)
+
 ![OTP verification & Password Reset](https://github.com/user-attachments/assets/de339bea-5c8d-4592-95e1-54de83debc21)
+
 
 
 ---
 
 ## 📂 Folder Structure
 FRONTEND-
-crm-frontend/
-├── frontend/
-│ ├── src/
-│ │ ├── api/ # Axios API handlers (user, ticket, password)
-│ │ ├── assets/ # Static assets
-│ │ ├── components/ # Reusable components (AddTicketForm, Login, Table, etc.)
-│ │ ├── layout/ # Layout structure
-│ │ ├── page/ # Main pages (Entry, Dashboard, TicketList, etc.)
-│ │ ├── utils/ # Validation helpers
-│ │ ├── App.js # Root component
-│ │ ├── store.js # Redux store configuration
+![image](https://github.com/user-attachments/assets/0309fdc6-05db-4ec4-9339-45f7ecbbe49d)
 
 
 BACKEND
-client-api/
-├── src/
-│ ├── helpers/ # Utility helpers (bcrypt, JWT, Redis)
-│ ├── middlewares/ # Auth & validation middleware
-│ ├── model/ # Mongoose models & schemas (User, Ticket, ResetPin)
-│ ├── routers/ # Express routers (user, ticket, tokens)
-│ ├── utils/ # Error handler, random generator
-├── .env # Environment variables
-├── app.js # Main express app
-
+![image](https://github.com/user-attachments/assets/dc1d5702-f1aa-4c5d-a20b-255e96ad623c)
 
 
 ## ⚙️ How to Run the Project
