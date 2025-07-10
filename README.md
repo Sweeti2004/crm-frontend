@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+# 🛠️ Service Desk Application – Issue Reporting and Tracking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application that enables users to **report, track, and manage issues efficiently**. This Service Desk system was built using **React.js**, **Node.js**, and **MongoDB** and designed with a focus on **real-time issue tracking**, **backend integration**, and a **user-friendly interface**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- 📝 Submit issues with details such as category, description, and priority
+- 📊 Track issue status (e.g., Open, In Progress, Resolved, Closed)
+- 👥 User authentication and role-based access (Admin/User)
+- 📬 Notifications for issue updates
+- 🔎 Filter and search issues by status, priority, or keyword
+- 📈 Dashboard view for quick insights
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💻 Tech Stack
 
-### `npm run build`
+### Frontend:
+- React.js
+- Redux Toolkit
+- Axios
+- CSS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend:
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- Redis (JWT storage)
+- bcrypt for password hashing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔑 JWT & Redis Integration
 
-### `npm run eject`
+Redis is used to store session tokens (JWTs) for better performance and scalability. Helper functions:
+- `setJWT(key, value)`
+- `getJWT(key)`
+- `deleteJWT(key)`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔄 Password Reset Flow
+1. User requests OTP.
+2. OTP is validated and matched.
+3. On success, the user resets the password.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## 📸 Screenshots
+![Login](https://github.com/user-attachments/assets/b4b6c623-56f3-4158-a908-c5b1247c838d)
+![Dashboard](https://github.com/user-attachments/assets/712b99fc-d7e8-449d-b46d-7eee9db136c3)
+![Ticket listing](https://github.com/user-attachments/assets/8f4b47ca-332c-4777-b9e5-bea03034d55b)
+![Add New Tickt](https://github.com/user-attachments/assets/23ad0924-51c5-4115-9ee3-2724cd4e04de)
+![Reply Ticket](https://github.com/user-attachments/assets/c8e5527a-65a7-4de7-9693-fdd170493ce5)
+![Forgot Password](https://github.com/user-attachments/assets/44da07db-ba70-4201-b16b-4c0cc4f5c948)
+![OTP verification & Password Reset](https://github.com/user-attachments/assets/de339bea-5c8d-4592-95e1-54de83debc21)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 📂 Folder Structure
+FRONTEND-
+crm-frontend/
+├── frontend/
+│ ├── src/
+│ │ ├── api/ # Axios API handlers (user, ticket, password)
+│ │ ├── assets/ # Static assets
+│ │ ├── components/ # Reusable components (AddTicketForm, Login, Table, etc.)
+│ │ ├── layout/ # Layout structure
+│ │ ├── page/ # Main pages (Entry, Dashboard, TicketList, etc.)
+│ │ ├── utils/ # Validation helpers
+│ │ ├── App.js # Root component
+│ │ ├── store.js # Redux store configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+BACKEND
+client-api/
+├── src/
+│ ├── helpers/ # Utility helpers (bcrypt, JWT, Redis)
+│ ├── middlewares/ # Auth & validation middleware
+│ ├── model/ # Mongoose models & schemas (User, Ticket, ResetPin)
+│ ├── routers/ # Express routers (user, ticket, tokens)
+│ ├── utils/ # Error handler, random generator
+├── .env # Environment variables
+├── app.js # Main express app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## ⚙️ How to Run the Project
 
-### Advanced Configuration
+### 🧩 Prerequisites
+- Node.js
+- MongoDB
+- Redis
+- npm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 🔧 Setup
 
-### Deployment
+```bash
+# Backend
+cd client-api
+npm install
+node app.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+# Frontend
+cd frontend
+npm install
+npm start
 
-### `npm run build` fails to minify
+---
+✨ Future Enhancements
+🔔 Real-time Notifications using Socket.IO for instant ticket updates, replies, and escalations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+📊 Analytics Dashboard to show charts and metrics like ticket resolution time, ticket count by category, and user activity.
+
+🧠 AI-based Ticket Tagging using NLP to auto-categorize tickets by content.
+
+🎯 SLA Management to set ticket response/resolution deadlines and track SLA violations.
+
+🌐 Multi-role Access Control with distinct views and permissions for Admin, Staff, and Users.
+
+📁 File Attachment Support so users can upload screenshots or logs with their issue.
+
+
+👩‍💻 Developer
+Sweeti Kumari
+📧 sweeti754940@gmail.com
+🔗 https://www.linkedin.com/in/sweeti-kumari-254850259/
