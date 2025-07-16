@@ -1,12 +1,15 @@
 const redis = require("redis");
 
-// Create Redis client
-const client = redis.createClient(process.env.REDIS_URL);
+// ✅ Create Redis client with TLS enabled (required by Upstash)
+const client = redis.createClient({
+  url: process.env.REDIS_URL,
+  socket: { tls: true },
+});
 
-// Handle Redis errors
+// ❌ Log Redis connection errors
 client.on("error", (err) => console.error("❌ Redis Client Error:", err));
 
-// ✅ Connect Redis (only once)
+// ✅ Connect Redis only once
 let redisConnected = false;
 const connectRedis = async () => {
   if (!redisConnected && !client.isOpen) {
@@ -17,9 +20,10 @@ const connectRedis = async () => {
 };
 connectRedis();
 
+// 🔐 Set a key (e.g., session token)
 const setJWT = async (key, value) => {
   try {
-    await connectRedis(); // 🔒 Ensure connection before usage
+    await connectRedis();
     const res = await client.set(key, value);
     return res;
   } catch (err) {
@@ -27,15 +31,18 @@ const setJWT = async (key, value) => {
   }
 };
 
+// 🎁 Get a key (e.g., fetch session token)
 const getJWT = async (key) => {
   try {
-    await connectRedis(); // 🔒 Ensure connection before usage
+    await connectRedis();
     const res = await client.get(key);
     return res;
   } catch (err) {
     throw err;
   }
 };
+
+// 🗑️ Delete a key (e.g., clear session)
 const deleteJWT = (key) => {
   try {
     client.del(key);
@@ -43,4 +50,5 @@ const deleteJWT = (key) => {
     console.log(error);
   }
 };
-module.exports = { setJWT, getJWT,deleteJWT, };
+
+module.exports = { setJWT, getJWT, deleteJWT };
