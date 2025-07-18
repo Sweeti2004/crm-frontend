@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const rootUrl = "http://localhost:5000/v1/";
-const otpReqUrl = rootUrl + "user/reset-password";
-const updatePassUrl = rootUrl + "user/reset-password";
+const rootUrl = process.env.REACT_APP_API_URL;
+
+const otpReqUrl = `${rootUrl}/user/reset-password`;
+const updatePassUrl = `${rootUrl}/user/reset-password`;
+
 
 export const reqPasswordOtp = email => {
 	return new Promise(async (resolve, reject) => {

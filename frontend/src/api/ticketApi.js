@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-const rootUrl = 'http://localhost:5000/v1';
+const rootUrl = process.env.REACT_APP_API_URL;
+
 const ticketUrl = `${rootUrl}/ticket`;
-const closeTicketUrl = `${rootUrl}/ticket/close-ticket/`;
+const closeTicketUrl = `${rootUrl}/ticket/close-ticket/`; // trailing slash is fine here
+
 
 export const getAllTickets = async () => {
   try {

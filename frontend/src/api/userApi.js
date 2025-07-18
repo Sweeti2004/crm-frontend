@@ -1,9 +1,10 @@
 import axios from "axios";
-const rootUrl = "http://localhost:5000/v1/";
-const loginUrl = rootUrl + "user/login";
-const userProfileUrl = rootUrl + "user";
-const logoutUrl = rootUrl + "user/logout";
-const newAccessJWT=rootUrl+"tokens"
+const rootUrl = process.env.REACT_APP_API_URL;
+const loginUrl = `${rootUrl}/user/login`;
+const userProfileUrl = `${rootUrl}/user`;        
+const logoutUrl = `${rootUrl}/user/logout`;
+const newAccessJWT = `${rootUrl}/tokens`;       
+
 export const userLogin = (frmData) => {
   return new Promise(async (resolve, reject) => {
     try {
