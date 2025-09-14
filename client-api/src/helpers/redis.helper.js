@@ -3,7 +3,7 @@ const redis = require("redis");
 // ✅ Create Redis client with TLS enabled (required by Upstash)
 const client = redis.createClient({
   url: process.env.REDIS_URL,
-  socket: { tls: true },
+  //socket: { tls: true },
 });
 
 // ❌ Log Redis connection errors
