@@ -14,29 +14,35 @@ router.all('/', (req, res, next) => {
 });
 
 // Create new user router
-router.post('/', async (req, res) => {
-    const { name, company, address, phone, email, password } = req.body;
+router.post("/", async (req, res) => {
+  const { name, company, address, phone, email, password } = req.body;
 
-    try {
-        const hashedPass = await hashPassword(password);
-        const newUserObj = {
-            name,
-            company,
-            address,
-            phone,
-            email,
-            password: hashedPass,
-        };
+  try {
+    //hash password
+    const hashedPass = await hashPassword(password);
 
-        const result = await insertUser(newUserObj);
-        console.log(result);
-        return res.json({ message: "new user created", result });
-    } catch (error) {
-        console.log(error);
-        return res.json({ status: "error", message: error.message });
-    }
+    const newUserObj = {
+      name,
+      company,
+      address,
+      phone,
+      email,
+      password: hashedPass,
+       };
+    const result = await insertUser(newUserObj);
+    console.log(result);
+    res.json({ status: "success", message: "New user created", result });
+  } catch (error) {
+		console.log(error);
+
+		let message =
+			"Unable to create new user at the moment, Please try agin or contact administration!";
+		if (error.message.includes("duplicate key error collection")) {
+			message = "this email already has an account";
+		}
+		res.json({ status: "error", message });
+	}
 });
-
 // User sign in router
 router.post("/login", async (req, res) => {
     console.log(req.body);

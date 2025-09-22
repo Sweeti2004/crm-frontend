@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-
+import Alert from "react-bootstrap/Alert"
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Spinner,
+  
+} from "react-bootstrap";
+import { newUserRegistration } from "./userRegAction";
+import { useDispatch, useSelector } from "react-redux";
 const initialState = {
-  name: "",
-  phone: "",
-  email: "",
-  company: "",
-  address: "",
-  password: "",
-  confirmPass: "",
+  name: "Prem Acharya",
+  phone: "0410000000",
+  email: "fakeemail@email.com",
+  company: "Dented Code",
+  address: "George st Sydney",
+  password: "Sweeti@2004",
+  confirmPass: "Sweeti@2004",
 };
-
 const passVerificationError = {
   isLenthy: false,
   hasUpper: false,
@@ -21,9 +30,12 @@ const passVerificationError = {
 };
 
 const RegistrationForm = () => {
+  const dispatch = useDispatch();
   const [newUser, setNewUser] = useState(initialState);
   const [passwordError, setPasswordError] = useState(passVerificationError);
-
+  const { isLoading, status, message } = useSelector(
+    (state) => state.registration
+  );
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -57,7 +69,7 @@ const RegistrationForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     alert("Form Submitted Successfully!");
-    console.log(newUser);
+     dispatch(newUserRegistration(newUser));
   };
 
   return (
@@ -68,7 +80,15 @@ const RegistrationForm = () => {
         </Col>
       </Row>
       <hr />
-
+      <Row>
+        <Col>
+          {message && (
+            <Alert variant={status === "success" ? "success" : "danger"}>
+              {message}
+            </Alert>
+          )}
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Form onSubmit={handleOnSubmit}>
@@ -203,6 +223,7 @@ const RegistrationForm = () => {
             >
               Submit
             </Button>
+             {isLoading && <Spinner variant="info" animation="border" />}
           </Form>
         </Col>
       </Row>
