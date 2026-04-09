@@ -17,20 +17,40 @@ const UserSchema = new Schema({
     maxlength: 100,
   },
   phone: {
-    type: Number,
-    maxlength: 11,
+    type: String,
+    maxlength: 15,
   },
   email: {
     type: String,
-    maxlength: 50,
+    maxlength: 100,
     required: true,
-    unique:true,
+    unique: true,
+    lowercase: true,
+    trim: true,
   },
   password: {
     type: String,
     minlength: 8,
     maxlength: 100,
     required: true,
+  },
+  // Role-based access control
+  role: {
+    type: String,
+    enum: ['client', 'support', 'admin'],
+    default: 'client',
+    required: true,
+  },
+  // Support staff department
+  department: {
+    type: String,
+    maxlength: 50,
+    default: null,
+  },
+  // Account status
+  isActive: {
+    type: Boolean,
+    default: true,
   },
   refreshJWT: {
     token: {
@@ -44,12 +64,20 @@ const UserSchema = new Schema({
       default: Date.now(),
     },
   },
-//   isVerified: {
-//     type: Boolean,
-//     required: true,
-//     default: false,
-//   },
-});
+  // Timestamps
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  lastLogin: {
+    type: Date,
+    default: null,
+  },
+}, { timestamps: true });
 
 module.exports = {
   UserSchema: mongoose.model("User", UserSchema),
