@@ -1,0 +1,290 @@
+/* ============================================
+   Form Styles
+   ============================================ */
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.form-wrapper {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+}
+
+body.dark-mode .form-wrapper {
+  background: var(--gray-800);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.form-header h1 {
+  font-size: var(--font-size-2xl);
+  margin:0 0 var(--spacing-sm);
+}
+
+.form-header .subtitle {
+  color: var(--gray-600);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+body.dark-mode .form-header .subtitle {
+  color: var(--gray-400);
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.form-group-row.full {
+  grid-template-columns: 1fr;
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+
+.form-text {
+  display: block;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+}
+
+body.dark-mode .form-text {
+  color: var(--gray-400);
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-check input[type="checkbox"],
+.form-check input[type="radio"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.form-check label {
+  cursor: pointer;
+  margin: 0;
+  user-select: none;
+}
+
+/* ============================================
+   Select
+   ============================================ */
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-md) center;
+  background-size: 16px 12px;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+body.dark-mode .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23f5f5f5' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   Textarea
+   ============================================ */
+
+.form-control.textarea {
+  min-height: 150px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ============================================
+   Input Groups
+   ============================================ */
+
+.input-group {
+  display: flex;
+  position: relative;
+  gap: var(--spacing-sm);
+}
+
+.input-group .form-control {
+  flex: 1;
+}
+
+.input-group-append {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  background-color: var(--gray-100);
+  border: 2px solid var(--gray-300);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-left: none;
+}
+
+body.dark-mode .input-group-append {
+  background-color: var(--gray-700);
+  border-color: var(--gray-600);
+}
+
+.input-group .form-control:focus + .input-group-append {
+  border-color: var(--primary-color);
+}
+
+/* ============================================
+   Password Strength Indicator
+   ============================================ */
+
+.password-strength {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background-color: var(--gray-100);
+}
+
+body.dark-mode .password-strength {
+  background-color: var(--gray-700);
+}
+
+.strength-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+  color: var(--gray-600);
+}
+
+body.dark-mode .strength-item {
+  color: var(--gray-300);
+}
+
+.strength-item.complete {
+  color: var(--success-color);
+  font-weight: var(--font-weight-medium);
+}
+
+.strength-item.incomplete {
+  color: var(--gray-600);
+}
+
+.strength-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: var(--font-size-xs);
+}
+
+.strength-item.complete .strength-icon {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.strength-item.incomplete .strength-icon {
+  background-color: var(--gray-400);
+  color: white;
+}
+
+/* ============================================
+   Form Actions
+   ============================================ */
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+  justify-content: center;
+}
+
+.form-actions .btn {
+  flex: 1;
+  max-width: 200px;
+}
+
+.form-link {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+}
+
+.form-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.form-link a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Validation States
+   ============================================ */
+
+.form-group.has-error .form-label {
+  color: var(--danger-color);
+}
+
+.form-group.has-success .form-control {
+  border-color: var(--success-color);
+  background-color: rgba(40, 167, 69, 0.05);
+}
+
+.form-group.has-error .form-control {
+  border-color: var(--danger-color);
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+.form-group.has-warning .form-control {
+  border-color: var(--warning-dark);
+  background-color: rgba(255, 152, 0, 0.05);
+}
+
+/* ============================================
+   Responsive Forms
+   ============================================ */
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: var(--spacing-lg);
+  }
+  
+  .form-wrapper {
+    padding: var(--spacing-lg);
+  }
+  
+  .form-header h1 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .form-group-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    max-width: none;
+  }
+}
