@@ -10,10 +10,6 @@ const { emailProcessor } = require("../helpers/email.helper");
 const { resetPassReqValidation, updatePassValidation } = require("../middlewares/formValidation.middleware")
 const { deleteJWT } = require("../helpers/redis.helper")
 
-router.all('/', (req, res, next) => {
-    next();
-});
-
 /**
  * POST /user
  * Register new user (default role: client)

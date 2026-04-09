@@ -6,6 +6,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
+const fs = require("fs");
 
 const port = process.env.PORT || 5000;
 
@@ -61,13 +62,19 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// === Serve React App for all non-API routes ===
-app.get("*", (req, res) => {
-  res.sendFile(path.join(buildPath, "index.html"));
-});
-
 // === 404 Not Found Handler ===
 app.use((req, res, next) => {
+  // Check if the file exists in the static build folder
+  const filePath = path.join(buildPath, req.path);
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    return next(); // Let express.static handle it
+  }
+  
+  // For non-API routes not found, serve React index.html (SPA fallback)
+  if (!req.path.startsWith('/v1/') && !req.path.startsWith('/api/')) {
+    return res.sendFile(path.join(buildPath, 'index.html'));
+  }
+  
   const error = new Error("Resources not found");
   error.status = 404;
   next(error);

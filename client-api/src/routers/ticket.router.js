@@ -4,10 +4,6 @@ const {insertTicket,getTickets,getTicketById,updateClientReply,updateStatusClose
 const{ userAuthorization, roleAuthorization, clientOnly, supportOnly, adminOnly }=require("../middlewares/roleAuthorization.middleware")
 const {createNewTicketValidation,replyTicketMessageValidation}=require("../middlewares/formValidation.middleware")
 
-router.all('/',(req,res,next)=>{
-    next();
-})
-
 /**
  * POST /ticket
  * Create new ticket (Clients only)
