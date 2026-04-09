@@ -5,12 +5,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require("path");
 
 const port = process.env.PORT || 5000;
 
 // === Security Middleware ===
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "*",
+  credentials: true
+}));
 
 // === MongoDB Connection Setup ===
 const mongoose = require("mongoose");
@@ -35,7 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// === Routers ===
+// === API Routers ===
 const userRouter = require("./src/routers/user.router");
 const ticketRouter = require("./src/routers/ticket.router");
 const tokensRouter = require("./src/routers/tokens.router");
@@ -44,9 +48,22 @@ app.use("/v1/user", userRouter);
 app.use("/v1/ticket", ticketRouter);
 app.use("/v1/tokens", tokensRouter);
 
-// === Root Route for health check ===
-app.get("/", (req, res) => {
-  res.send("🎉 Welcome to the Service Desk API!");
+// === Serve Static React Build ===
+const buildPath = path.join(__dirname, '../frontend/build');
+app.use(express.static(buildPath));
+
+// === Root Route for health check (API) ===
+app.get("/api/health", (req, res) => {
+  res.json({ 
+    status: "success",
+    message: "🎉 Welcome to ResolveHub Service Desk API!",
+    environment: process.env.NODE_ENV || "development"
+  });
+});
+
+// === Serve React App for all non-API routes ===
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"));
 });
 
 // === 404 Not Found Handler ===
@@ -64,5 +81,6 @@ app.use((error, req, res, next) => {
 
 // === Start Server ===
 app.listen(port, () => {
-  console.log(`🚀 API is ready on http://localhost:${port}`);
+  console.log(`🚀 ResolveHub API is ready on http://localhost:${port}`);
+  console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
