@@ -70,7 +70,10 @@ const updatePassword = (email, newhashedPass) => {
       UserSchema.findOneAndUpdate(
         { email },
         {
-          $set: { password: newhashedPass },
+          $set: { 
+            password: newhashedPass,
+            updatedAt: Date.now(),
+          },
         },
         { new: true }
       )
@@ -85,10 +88,99 @@ const updatePassword = (email, newhashedPass) => {
     }
   });
 };
+
+/**
+ * Get all users (for admin)
+ */
+const getAllUsers = async () => {
+  try {
+    const users = await UserSchema.find({}, { password: 0 }).sort({ createdAt: -1 });
+    return users;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+/**
+ * Get users by role
+ */
+const getUsersByRole = async (role) => {
+  try {
+    const users = await UserSchema.find({ role }, { password: 0 });
+    return users;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+/**
+ * Update user role
+ */
+const updateUserRole = async (userId, role, department = null) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new Error("Invalid User ID");
+    }
+
+    const updateObj = {
+      role,
+      updatedAt: Date.now(),
+    };
+
+    if (department && role === 'support') {
+      updateObj.department = department;
+    }
+
+    const data = await UserSchema.findOneAndUpdate(
+      { _id: userId },
+      { $set: updateObj },
+      { new: true }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+/**
+ * Update user active status
+ */
+const updateUserStatus = async (userId, isActive) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new Error("Invalid User ID");
+    }
+
+    const data = await UserSchema.findOneAndUpdate(
+      { _id: userId },
+      { 
+        $set: { 
+          isActive,
+          updatedAt: Date.now(),
+        }
+      },
+      { new: true }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 module.exports = {
   insertUser,
   getUserByEmail,
   getUserById,
   storeUserRefreshJWT,
   updatePassword,
+  getAllUsers,
+  getUsersByRole,
+  updateUserRole,
+  updateUserStatus,
 };
