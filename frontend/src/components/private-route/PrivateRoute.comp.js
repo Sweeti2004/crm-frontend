@@ -4,23 +4,56 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginSuccess } from '../login/loginSlice';
 import { fetchNewAccessJWT } from '../../api/userApi';
 import { getUserProfile } from "../../page/dashboard/userAction"
-// Replace with real auth logic
 
-const PrivateRoute = ({ children, ...rest }) => {
+/**
+ * PrivateRoute Component
+ * Protects routes and enforces authentication and role-based access
+ */
+const PrivateRoute = ({ children, requiredRoles = null, ...rest }) => {
   const dispatch = useDispatch()
   const { isAuth } = useSelector(state => state.login)
   const { user } = useSelector(state => state.user)
 
   useEffect(() => {
     const updateAccessJWT = async () => {
-      const result = await fetchNewAccessJWT();
-      result && dispatch(loginSuccess());
+      try {
+        const result = await fetchNewAccessJWT();
+        result && dispatch(loginSuccess());
+      } catch (error) {
+        console.error('Token refresh failed:', error);
+      }
     };
-    !user._id && dispatch(getUserProfile())
-    !sessionStorage.getItem('accessJWT') && localStorage.getItem('crmSite') && updateAccessJWT();
-    !isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess())
-  }, [dispatch, isAuth,user._id])
-  return isAuth ? children : <Navigate to="/" replace />;
+    
+    if (!user._id) {
+      dispatch(getUserProfile());
+    }
+    
+    if (!sessionStorage.getItem('accessJWT') && localStorage.getItem('crmSite')) {
+      updateAccessJWT();
+    }
+    
+    if (!isAuth && sessionStorage.getItem("accessJWT")) {
+      dispatch(loginSuccess());
+    }
+  }, [dispatch, isAuth, user._id])
+
+  // Check authentication
+  if (!isAuth) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Check role-based access
+  if (requiredRoles && user?.role) {
+    const hasRequiredRole = Array.isArray(requiredRoles) 
+      ? requiredRoles.includes(user.role)
+      : user.role === requiredRoles;
+
+    if (!hasRequiredRole) {
+      return <Navigate to="/dashboard" replace />;
+    }
+  }
+
+  return children;
 };
 
 export default PrivateRoute;
